@@ -1,0 +1,35 @@
+<meta charset="UTF-8">
+<div id="logpage">
+  <mat-card id="title" [class.mat-elevation-z12]="true">
+    <mat-card-content>
+      <h1>Jelentkezz be!</h1>
+    </mat-card-content>
+  </mat-card>
+  <mat-card [class.mat-elevation-z12]="true" id="matcardkont">
+    <mat-card-content>
+      <div>
+        <form [formGroup]="LoginForm" id="loginform" (ngSubmit)="onSubmit()">
+          <mat-form-field>
+            <input matInput type="email" placeholder="Email" formControlName="email" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="password" placeholder="Jelszó" formControlName="password" required>
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit" class="buttons" [class.mat-elevation-z5]="true">
+            Bejelentkezés
+          </button>
+        </form>
+        <button mat-raised-button color="primary" class="buttons" [class.mat-elevation-z4]="true" (click)="goToLoginWithPhoneNumber()">
+          Bejelentkezés telefonszámmal
+        </button>
+        <button mat-raised-button color="primary" class="buttons" [class.mat-elevation-z5]="true" (click)="goToReg()">Ha
+          nincs fiókod, regisztrálj!
+        </button>
+        <button mat-raised-button color="primary" class="buttons" [class.mat-elevation-z5]="true"
+                (click)="goToRePassw()">Elfelejtetted a jelszavad? <u>KATT IDE!</u>
+        </button>
+
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

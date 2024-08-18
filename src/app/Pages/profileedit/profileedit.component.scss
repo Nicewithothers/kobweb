@@ -1,0 +1,50 @@
+@media only screen and (max-width: 1279px){
+  mat-chip{
+    font-size: 1.4vw;
+  }
+}
+
+@media only screen and (max-width: 959px){
+  mat-chip {
+    font-size: 1.5vw;
+  }
+}
+
+@media only screen and (max-width: 700px){
+  mat-chip{
+    font-size: 2vw;
+  }
+}
+
+.example-header-image {
+  border-radius: 50%;
+}
+
+.profileeditform {
+  max-width: 25%;
+  align-items: center;
+  margin: 15px auto 15px auto;
+  border-radius: 10px;
+}
+
+.matcardkont{
+  align-items: center;
+  margin: 15px auto 15px auto;
+  border-radius: 10px;
+}
+
+.adminForm{
+  width: 100%;
+  margin-top: 3%;
+}
+
+#expand{
+  width: 5%;
+  height: 5%;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+#expand:hover{
+  background-color: lightgray;
+}

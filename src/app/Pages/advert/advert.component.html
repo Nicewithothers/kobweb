@@ -1,0 +1,43 @@
+<meta charset="UTF-8">
+<mat-toolbar *ngIf="topad==true"
+             style="width: available;
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: center;
+                    z-index: 20;
+                    position: sticky;
+                    top: 0;
+                    background-size: 100% 100%" [style.background-image]="'url(' + picUrl + ')'">
+  <button mat-button style="width: 100%; height: 100%"></button>
+  <button mat-button style="height: 100%" (click)="topad = false">
+    <mat-icon>not_interested</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div id="fillad" *ngIf="fillad==true">
+  <button mat-button style="width: 100%; height: 100%; position: relative; z-index: 2" [style.background-image]="'url(' + picUrl + ')'"></button>
+  <div style="position: absolute; z-index: 10">
+    <button mat-button (click)="fillad = false">
+      <mat-icon>not_interested</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div id="vertad" *ngIf="vertad==true" style="z-index: 2; background-size: 100% calc(100vh/2)" [style.background-image]="'url(' + picUrl + ')'">
+  <div style="position: fixed; z-index: 10" (click)="vertad = false">
+    <mat-icon id="cancel">not_interested</mat-icon>
+  </div>
+</div>
+
+<mat-toolbar *ngIf="botad==true"
+             style="bottom:0;
+                    position: fixed;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 20">
+  <button mat-button style="width: 100%; height: 100%" [style.background-image]="'url(' + picUrl + ')'"></button>
+  <button mat-button style="height: 100%" (click)="botad = false">
+    <mat-icon>not_interested</mat-icon>
+  </button>
+</mat-toolbar>

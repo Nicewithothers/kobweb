@@ -1,0 +1,135 @@
+<!--<p>menu works!</p>-->
+<meta charset="UTF-8">
+<mat-toolbar fxLayout fxLayoutAlign="space-between center" class="felsosor">
+  <span fxFlex="10">
+    <img fxShow.lt-xl="false" fxShow class="kobweb_img" src="../../../assets/kobweb_logo.png" alt="kobweb_logo"
+         style="padding-top: 12px; width: 100%"
+         routerLink="/feed" loading="lazy">
+    <img fxShow.lt-lg="false" fxShow="false" fxShow.lt-xl  class="kobweb_img" src="../../../assets/kobweb_logo.png" alt="kobweb_logo"
+         style="padding-top: 12px; width: 125%"
+         routerLink="/feed" loading="lazy">
+    <img fxShow.lt-md="false" fxShow="false" fxShow.lt-lg  class="kobweb_img" src="../../../assets/kobweb_logo.png" alt="kobweb_logo"
+         style="padding-top: 12px; width: 150%"
+         routerLink="/feed" loading="lazy">
+    <img fxShow.lt-sm="false" fxShow="false" fxShow.lt-md class="kobweb_img" src="../../../assets/kobweb_logo.png" alt="kobweb_logo"
+         style="padding-top: 12px; width: 200%"
+         routerLink="/feed" loading="lazy">
+    <img fxShow="false" fxShow.lt-sm class="kobweb_img" src="../../../assets/kobweb_logo.png" alt="kobweb_logo"
+         style="padding-top: 12px; width: 250%"
+         routerLink="/feed" loading="lazy">
+  </span>
+  <span fxFlex="40" *ngIf="this.router.url !== '/login'
+                    && this.router.url !== '/registration'
+                    && this.router.url !== '/support'
+                    && this.router.url !== '/passreset'
+                    && this.router.url !== '/loginphonenumber'
+                    && this.router.url !== '/otp'" style="font-size: 5px">
+
+      <div id="searchbar" fxLayout fxLayoutAlign="space-between center">
+        <mat-form-field appearance="none" style="width: 95%">
+            <input matInput type="text" id="search" [(ngModel)]='searchedText' (keydown.enter)="onSearch()">
+            <button matSuffix mat-icon-button (click)="onSearch()">
+              <mat-icon style="cursor: pointer; margin-right: 5%; width: 97%; font-size: 4em;">search</mat-icon>
+            </button>
+          </mat-form-field>
+      </div>
+  </span>
+  <span fxFlex="10" *ngIf="this.router.url !== '/login'
+                    && this.router.url !== '/registration'
+                    && this.router.url !== '/support' && this.router.url !== '/loginphonenumber' && this.router.url !== '/otp'">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>notifications</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <mat-list *ngFor="let notification of notifications">
+        <mat-list-item> {{notification.ertesites}} {{notification.notificAction}}
+          <button matSuffix mat-icon-button (click)="onDelete(notification)">
+            <mat-icon style="cursor: pointer; margin-right: 5%; width: 97%; font-size: 1em;">delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+
+    </mat-menu>
+  </span>
+
+</mat-toolbar>
+<mat-sidenav-container [hasBackdrop]="false">
+  <mat-sidenav mode="side" #smallnav opened>
+    <mat-list role="list" style="padding: 0; height: 100%; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; align-content: space-evenly">
+      <mat-list-item role="listitem" (click)="bignav.open();smallnav.close()">
+        <mat-icon>arrow_forward_ios</mat-icon>
+      </mat-list-item>
+      <mat-list-item *ngIf="!loggedInUser" role="listitem" routerLink="/login" (click)="close()" [ngStyle]="{'border-bottom': this.router.url === '/login' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>login</mat-icon>
+      </mat-list-item>
+      <mat-list-item *ngIf="loggedInUser" style="color: red" role="listitem" routerLink="/login" (click)="logout()" [ngStyle]="{'border-bottom': this.router.url === '/login' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>logout</mat-icon>
+      </mat-list-item>
+      <mat-list-item  *ngIf="!loggedInUser" role="listitem" routerLink="/registration" (click)="close()" [ngStyle]="{'border-bottom': this.router.url === '/registration' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>app_registration</mat-icon>
+      </mat-list-item>
+      <mat-list-item *ngIf="loggedInUser && loggedInUser.emailVerified" role="listitem" routerLink="/feed" (click)="close()" [ngStyle]="{'border-bottom': this.router.url === '/feed' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>explore</mat-icon>
+      </mat-list-item>
+      <mat-list-item *ngIf="loggedInUser" role="listitem" routerLink="/profile" (click)="close()" [ngStyle]="{'border-bottom': this.router.url === '/profile' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>account_box</mat-icon>
+      </mat-list-item>
+      <mat-list-item *ngIf="loggedInUser && loggedInUser.emailVerified" role="listitem" routerLink="/post" (click)="close()" [ngStyle]="{'border-bottom': this.router.url === '/post' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>announcement</mat-icon>
+      </mat-list-item>
+      <mat-list-item style="color:darkred" *ngIf="loggedInUser && loggedInUser.emailVerified && this.userRole === 'admin'" role="listitem" routerLink="/adminpanel" (click)="close()" [ngStyle]="{'border-bottom': this.router.url === '/adminpanel' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>build</mat-icon>
+      </mat-list-item>
+      <mat-list-item role="listitem" routerLink="/support" (click)="close()" [ngStyle]="{'border-bottom': this.router.url === '/support' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>help</mat-icon>
+      </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+
+  <mat-sidenav #bignav (keydown.escape)="bignav.close();smallnav.open()">
+    <mat-list role="list" style="padding: 0; height: 100%; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; align-content: space-evenly">
+      <mat-list-item role="listitem" (click)="bignav.close();smallnav.open()">
+        <mat-icon>arrow_back_ios</mat-icon>
+        <span>Becsukás</span>
+      </mat-list-item>
+      <mat-list-item *ngIf="!loggedInUser" role="listitem" routerLink="/login" (click)="close();bignav.close();smallnav.open()" [ngStyle]="{'border-bottom': this.router.url === '/login' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>login</mat-icon>
+        <span>Bejelentkezés</span>
+      </mat-list-item>
+      <mat-list-item *ngIf="loggedInUser" style="color: red" role="listitem" routerLink="/login" (click)="logout();bignav.close();smallnav.open()" [ngStyle]="{'border-bottom': this.router.url === '/login' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>logout</mat-icon>
+        <span>Kijelentkezés</span>
+      </mat-list-item>
+      <mat-list-item *ngIf="!loggedInUser" role="listitem" routerLink="/registration" (click)="close();bignav.close();smallnav.open()" [ngStyle]="{'border-bottom': this.router.url === '/registration' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>app_registration</mat-icon>
+        <span>Regisztráció</span>
+      </mat-list-item>
+      <mat-list-item *ngIf="loggedInUser && loggedInUser.emailVerified" role="listitem" routerLink="/feed" (click)="close();bignav.close();smallnav.open()" [ngStyle]="{'border-bottom': this.router.url === '/feed' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>explore</mat-icon>
+        <span>Feed</span>
+      </mat-list-item>
+      <mat-list-item *ngIf="loggedInUser" role="listitem" routerLink="/profile" (click)="close();bignav.close();smallnav.open()" [ngStyle]="{'border-bottom': this.router.url === '/profile' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>account_box</mat-icon>
+        <span>Profil</span>
+      </mat-list-item>
+      <mat-list-item *ngIf="loggedInUser && loggedInUser.emailVerified" role="listitem" routerLink="/post" (click)="close();bignav.close();smallnav.open()" [ngStyle]="{'border-bottom': this.router.url === '/post' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>announcement</mat-icon>
+        <span>Posztolás</span>
+      </mat-list-item>
+      <mat-list-item *ngIf="loggedInUser && loggedInUser.emailVerified && this.userRole === 'admin'" role="listitem" routerLink="/adminpanel" (click)="close();bignav.close();smallnav.open()" [ngStyle]="{'border-bottom': this.router.url === '/post' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon style="color:darkred">build</mat-icon>
+        <span>Admin</span>
+      </mat-list-item>
+      <mat-list-item role="listitem" routerLink="/support" (click)="close();bignav.close();smallnav.open()" [ngStyle]="{'border-bottom': this.router.url === '/support' ? 'solid 5px #9fd35c' : ''}">
+        <mat-icon>help</mat-icon>
+        <span>Segítség</span>
+      </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content (click)="bignav.close();smallnav.open()">
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
